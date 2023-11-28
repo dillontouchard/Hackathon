@@ -1,31 +1,51 @@
+let rad = 60; // Width of the shape
+let xpos, ypos; // Starting position of shape
+
+let xspeed = 2.8; // Speed of the shape
+let yspeed = 2.2; // Speed of the shape
+
+let xdirection = 1; // Left or Right
+let ydirection = 1; // Top to Bottom
+
 function setup() {
-    createCanvas(1000, 1000) ;
-    colorMode(HSB);
-    angleMode(DEGREES);
+  createCanvas(1000, 600);
+  noStroke();
+  frameRate(30);
+  ellipseMode(RADIUS);
+  // Set the starting position of the shape
+  xpos = width / 2;
+  ypos = height / 2;
 }
+
 function draw() {
-    background (220)
-    noStroke();
-  
-    //loop steps through 36 times drawing 
-    //a circle with a separate hue each time
-    
-    for (let i = 0;i<36;i++){
-      
-    //determines position of circles
-      x = 200 + 100*cos(i*10);
-      y = 200 + 100*sin(i*10);
-    
-    //i * 10 allows to cover the entire hue range
-    //the first circle has a hue of 0*10 = 0
-    // last circle has has a hue of 35*10 = 350
-    // hue of 0 and 360 are identical
-      
-      fill(i*10,100,100);
-      circle(x,y,50);
-    }
+  colorMode(HSB);
+  background(0, 20, 100);
+
+  // Update the position of the shape
+  xpos = xpos + xspeed * xdirection;
+  ypos = ypos + yspeed * ydirection;
+
+  // Test to see if the shape exceeds the boundaries of the screen
+  // If it does, reverse its direction by multiplying by -1
+  if (xpos > width - rad || xpos < rad) {
+    xdirection *= -1;
+  }
+  if (ypos > height - rad || ypos < rad) {
+    ydirection *= -1;
+  }
+
+  // Draw the shape
+  for (i = 0; i < 2; i++) {
     fill(255, 204, 100);
-    square(600, 100, 60);
+    ellipse(xpos, ypos, rad, rad);
+    if (ellipse(xpos,ypos,rad,rad) != undefined) {
+        ellipse(xpos+100,ypos+100,rad,rad)
+    }
+  }
+}
+
+function getRandomNumber(min, max) {
+    return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
 
